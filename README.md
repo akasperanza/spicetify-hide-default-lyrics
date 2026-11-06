@@ -7,7 +7,7 @@ when it has none.
 | Situation | What you see |
 |---|---|
 | Spicy Lyrics has the lyrics | Spotify's lyrics button and the Now Playing lyrics preview are hidden |
-| Spicy Lyrics has none, Spotify does | Spicy Lyrics' playbar buttons and card are hidden; Spotify's lyrics stay |
+| Spicy Lyrics has none, Spotify does | Spicy Lyrics' playbar buttons and card are hidden; Spotify's lyrics stay. I haven't tested it myself, but that's what Claude said lol |
 | Neither has any | Both are hidden (Spotify disables its own button when it has none) |
 | Spicy Lyrics isn't installed | Nothing changes |
 
@@ -27,25 +27,6 @@ when it has none.
 
 To remove it, take `hideDefaultLyrics.js` out of that list and apply again.
 
-## How it works
-
-It can't be a CSS snippet: Spicy Lyrics sets `display: inline-block !important` on its buttons inline, which a
-stylesheet can't override, and CSS has no way to tell whether a song has lyrics.
-
-- **Spicy Lyrics** keeps the lyrics it found in the browser's Cache API (`SpicyLyrics_LyricsStore*`) and stores nothing
-  for songs it found none for. A cached entry for the current track means it has lyrics. When it finds none, its Now
-  Playing card shows a loading skeleton and then removes itself, which the extension takes as "none" (about a second
-  and a half after the song changes). If the card never shows up (the Now Playing panel is closed), Spicy Lyrics gets
-  3 seconds to look first. Until a verdict, Spotify's lyrics stay hidden so nothing flickers.
-- **Spotify** disables its lyrics button when it has no lyrics for the song.
-
-The extension sets `data-hdl-spicy="yes|no|pending"` on `<html>` and a small stylesheet does the rest.
-
-## Caveats
-
-- It relies on Spicy Lyrics' cache name. If a Spicy Lyrics update renames it, the extension will call every song
-  "no lyrics" and hide Spicy Lyrics' buttons. Open an issue if that happens.
-- Episodes and local files count as "no lyrics".
 - Tested on Linux with Spotify 1.3.4.258, Spicetify 2.46.4 and the LiquidMusic theme.
 
 ## License
