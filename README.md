@@ -11,6 +11,16 @@ when it has none.
 | Neither has any | Both are hidden (Spotify disables its own button when it has none) |
 | Spicy Lyrics isn't installed | Nothing changes |
 
+## Screenshots
+
+Spicy Lyrics has no lyrics for the song: its buttons are gone, and so is Spotify's (it has none either).
+
+![The playbar when there are no lyrics](screenshots/no-lyrics.png)
+
+Spicy Lyrics has the lyrics: its buttons show, Spotify's own lyrics button is hidden.
+
+![The playbar when Spicy Lyrics has the lyrics](screenshots/lyrics.png)
+
 ## Install
 
 1. Copy `hideDefaultLyrics.js` into your Spicetify `Extensions` folder (`spicetify path userdata` prints its parent;
