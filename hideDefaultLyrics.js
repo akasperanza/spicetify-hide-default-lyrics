@@ -6,7 +6,9 @@
 //   neither has any   -> both are hidden (Spotify disables its button when it has none)
 //
 // Spicy Lyrics keeps the lyrics it found in the Cache API and stores nothing for songs it found none for, so a
-// cached entry for the current track means it has lyrics. Spicy gets a few seconds to look before "none" is called.
+// cached entry for the current track means it has lyrics. When it finds none, its Now Playing card shows a loading
+// skeleton and then removes itself: that is taken as "none" right away. With the card never showing (Now Playing panel
+// closed) Spicy gets a few seconds to look before "none" is called.
 
 (function hideDefaultLyrics() {
 	if (!Spicetify?.Player?.data) {
@@ -14,7 +16,8 @@
 		return;
 	}
 
-	const GRACE_MS = 8000;
+	const GRACE_MS = 3000; // no Now Playing card to watch: how long Spicy gets to find lyrics
+	const CARD_GONE_MS = 1000; // the card is rebuilt for the next song within this long: not "gone" before that
 	const SPICY_BUTTONS = ["SpicyLyrics_PageButton", "SpicyLyrics_PopupLyricsButton", "SpicyLyrics_FullscreenButton"];
 	const spicyButtons = SPICY_BUTTONS.map((id) => `#${id}`).join(", ");
 	const spotifyButton = `[data-testid="lyrics-button"]:not(:has(#SpicyLyricsPageSvg))`;
@@ -41,6 +44,7 @@
 
 	let trackUri = "";
 	let trackSince = 0;
+	let cardSeen = false; // the card has shown up since the song changed
 
 	async function spicyHasLyrics(id) {
 		// The card still shows the previous song's lines for a moment after a song change
@@ -64,16 +68,21 @@
 		if (uri !== trackUri) {
 			trackUri = uri;
 			trackSince = Date.now();
+			cardSeen = false;
 		}
+		const age = Date.now() - trackSince;
+		const card = document.getElementById("SpicyLyricsNPVCard");
+		if (card) cardSeen = true;
 		const id = uri.split(":").pop();
 		let state = "pending";
 		if (!id || !uri.startsWith("spotify:track:")) state = "no";
 		else if (await spicyHasLyrics(id)) state = "yes";
-		else if (Date.now() - trackSince > GRACE_MS) state = "no";
+		else if (cardSeen && !card && age > CARD_GONE_MS) state = "no";
+		else if (!cardSeen && age > GRACE_MS) state = "no";
 		if (root.getAttribute("data-hdl-spicy") !== state) root.setAttribute("data-hdl-spicy", state);
 	}
 
 	Spicetify.Player.addEventListener("songchange", update);
-	setInterval(update, 700);
+	setInterval(update, 300);
 	update();
 })();

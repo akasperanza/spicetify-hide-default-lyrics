@@ -33,8 +33,10 @@ It can't be a CSS snippet: Spicy Lyrics sets `display: inline-block !important` 
 stylesheet can't override, and CSS has no way to tell whether a song has lyrics.
 
 - **Spicy Lyrics** keeps the lyrics it found in the browser's Cache API (`SpicyLyrics_LyricsStore*`) and stores nothing
-  for songs it found none for. A cached entry for the current track means it has lyrics. After a song change it gets
-  8 seconds to look before "none" is called; until then Spotify's lyrics stay hidden so nothing flickers.
+  for songs it found none for. A cached entry for the current track means it has lyrics. When it finds none, its Now
+  Playing card shows a loading skeleton and then removes itself, which the extension takes as "none" (about a second
+  and a half after the song changes). If the card never shows up (the Now Playing panel is closed), Spicy Lyrics gets
+  3 seconds to look first. Until a verdict, Spotify's lyrics stay hidden so nothing flickers.
 - **Spotify** disables its lyrics button when it has no lyrics for the song.
 
 The extension sets `data-hdl-spicy="yes|no|pending"` on `<html>` and a small stylesheet does the rest.
