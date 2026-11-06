@@ -1,5 +1,7 @@
 # Hide Default Lyrics
 
+![Hide Default Lyrics](screenshots/cover.png)
+
 A [Spicetify](https://spicetify.app) extension for people who use [Spicy Lyrics](https://github.com/Spikerko/spicy-lyrics):
 it keeps Spotify's own lyrics out of the way while Spicy Lyrics has the song's lyrics, and hides Spicy Lyrics' buttons
 when it has none.
