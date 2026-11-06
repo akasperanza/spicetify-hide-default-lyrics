@@ -1,0 +1,9 @@
+{
+	"name": "Hide Default Lyrics",
+	"description": "For Spicy Lyrics users: hides Spotify's own lyrics while Spicy Lyrics has the song's lyrics, and Spicy Lyrics' buttons when it has none.",
+	"preview": "screenshots/lyrics.png",
+	"main": "hideDefaultLyrics.js",
+	"readme": "README.md",
+	"authors": [{ "name": "akasperanza", "url": "https://github.com/akasperanza" }],
+	"tags": ["lyrics", "spicy lyrics", "playbar"]
+}

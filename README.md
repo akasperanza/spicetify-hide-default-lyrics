@@ -23,6 +23,12 @@ Spicy Lyrics has the lyrics: its buttons show, Spotify's own lyrics button is hi
 
 ## Install
 
+### From the Marketplace
+
+Open the **Marketplace** in Spotify, go to **Extensions**, search for **Hide Default Lyrics** and install it.
+
+### Manually
+
 1. Copy `hideDefaultLyrics.js` into your Spicetify `Extensions` folder (`spicetify path userdata` prints its parent;
    on Linux and macOS it is `~/.config/spicetify/Extensions`).
 2. Enable it and apply:
